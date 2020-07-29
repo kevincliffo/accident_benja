@@ -93,8 +93,18 @@ class Main extends CI_Controller {
         );
 
         $res = $this->model_users->validate($data);
-        if($res)
+        if($res['UserFound'])
         {
+            $data = array(
+                'Email' => $email,
+                'UserId' => $res['UserId'],
+                'IsLoggedIn' => $res['UserFound'],
+                'UserType' => $res['UserType'],
+                'FirstName' => $res['FirstName'],
+                'LastName' => $res['LastName']
+            );
+            $this->session->set_userdata($data);
+
             $this->dashboard();
         }
         else{

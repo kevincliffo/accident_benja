@@ -57,8 +57,8 @@
                     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Accidents:</h6>
-                            <?php echo anchor('main/addaccident', 'Report Accident', 'class="collapse-item"');?>
-                            <?php echo anchor('main/allaccidents', 'View Accidents', 'class="collapse-item"');?>
+                            <?php echo anchor('accidents/addaccident', 'Report Accident', 'class="collapse-item"');?>
+                            <?php echo anchor('accidents/allaccidents', 'View Accidents', 'class="collapse-item"');?>
                         </div>
                     </div>
                 </li>

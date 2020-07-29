@@ -56,10 +56,28 @@ class Model_Users extends CI_Model {
 
         if($query->num_rows() == 1)
         {
-            return true;
+            $user = $this->getuserdataoveremail($data['Email']);
+            //print_r($user); die();
+            $ret = array(
+                'UserId' => $user[0]['UserId'],
+                'FirstName' => $user[0]['FirstName'],
+                'LastName' => $user[0]['LastName'],
+                'UserFound' => true,
+                'UserType' => $user[0]['UserType'],
+                'Email' => $user[0]['Email']
+            );
+            return $ret;
         }
 
-        return false;
+        $ret = array(
+            'UserId' => '',
+            'FirstName' => '',
+            'LastName' => '',
+            'UserFound' => false,
+            'UserType' => '',
+            'Email' => '');
+
+        return $ret;
     }
 
     function getuserscount()
@@ -123,21 +141,6 @@ class Model_Users extends CI_Model {
         $this->db->select('*'); 
         $this->db->order_by('UserId', 'ASC');
         $query = $this->db->get('users');
-        
-        if ($query->num_rows() > 0)
-        {
-            return $query->result_array();
-        } else {
-            return array();
-        }
-    } 
-
-    public function getallcounties()
-    {
-        $this->db->query("SET sql_mode = '' ");
-        $this->db->select('*'); 
-        $this->db->order_by('Id', 'ASC');
-        $query = $this->db->get('counties');
         
         if ($query->num_rows() > 0)
         {
