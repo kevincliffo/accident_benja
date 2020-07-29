@@ -18,6 +18,19 @@ class Accidents extends CI_Controller {
         $this->load->view('includes/footer', $data);
     }
 
+    function viewdetails($id)
+    {
+        $this->load->model('model_accidents');
+        $data['accident'] = $this->model_accidents->getaccidentdetailsoverid($id);
+        $data['images'] = $this->model_accidents->getimagesoveruuid($data['accident'][0]['UUID']);
+        //print_r($data['images']);die();
+        $data['title'] = 'Accident Reporting System | Accidents - ' .$id;
+
+        $this->load->view('includes/header', $data);
+        $this->load->view('view_single_accident', $data);
+        $this->load->view('includes/footer', $data);
+    }
+
     function addaccident()
     {
         $this->load->model('model_accidents');
@@ -42,6 +55,7 @@ class Accidents extends CI_Controller {
         $subCounty = $this->input->post('subCounty');
         $location = $this->input->post('location');
         $accidentType = $this->input->post('accidentType');
+        $details = $this->input->post('details');
         $reporter = $this->session->userdata('Email');
 
         $uuid = $this->uuid();
@@ -52,6 +66,7 @@ class Accidents extends CI_Controller {
             'Location'   => $location,
             'AccidentType'   => $accidentType,
             'ReportedBy'   => $reporter,
+            'Details'  => $details,
             'UUID' => $uuid
         );
 

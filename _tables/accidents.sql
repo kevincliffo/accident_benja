@@ -6,5 +6,6 @@ CREATE TABLE accidents (
   SubCounty varchar(50) NOT NULL,
   Location varchar(50) NOT NULL,
   AccidentType varchar(50) NOT NULL,
+  Details varchar(255) NOT NULL,
   AccidentDate datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

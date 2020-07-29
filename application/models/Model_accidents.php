@@ -42,5 +42,35 @@ class Model_Accidents extends CI_Model {
         } else {
             return array();
         }
+    }
+    
+    public function getaccidentdetailsoverid($id)
+    {
+        $this->db->query("SET sql_mode = '' ");
+        $this->db->where('Id', $id);
+
+        $query = $this->db->get('accidents');
+
+        if ($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        } else {
+            return array();
+        }
+    }
+    
+    public function getimagesoveruuid($uuid)
+    {
+        $this->db->query("SET sql_mode = '' ");
+        $this->db->where('AccidentUUID', $uuid);
+
+        $query = $this->db->get('images');
+
+        if ($query->num_rows() > 0)
+        {
+            return $query->result_array();
+        } else {
+            return array();
+        }
     }    
 }

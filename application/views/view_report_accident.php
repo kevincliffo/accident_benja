@@ -120,6 +120,26 @@
                                     <div class="col-md-6">
                                         <div class="form-label-group">
                                             <?php
+                                                $details = array('class' => 'form-control',
+                                                            'id'=>'details',
+                                                            'name'=>'details',
+                                                            'type' => 'textarea',
+                                                            'placeholder' => 'Details',
+                                                            'required' =>'required',
+                                                            'rows' => 3,
+                                                            'cols' => 15
+                                                            );
+                                                echo form_textarea($details);                      
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>                            
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">                                
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <?php
                                                 $file = array('class' => 'form-control',
                                                             'id'=>'files[]',
                                                             'name'=>'files[]',
@@ -132,8 +152,6 @@
                                                 echo form_input($file);                      
                                             ?>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
                                     </div>
                                 </div>                            
                             </div>                                                   
