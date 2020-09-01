@@ -26,6 +26,10 @@
                             <?php 
                                 echo form_open_multipart('accidents/addaccidenttodb');
                             ?>
+                            <input type="hidden" name="motorvehicletypes" id="motorvehicletypes">
+                            <input type="hidden" name="colours" id="colours">
+                            <input type="hidden" name="numberplates" id="numberplates">
+
                             <center><h3>Accident Details</h3></center>                           
                             <div class="form-group">
                                 <div class="form-row">                                
@@ -78,7 +82,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-label-group">
-                                        <select id="accidentType" name="accidentType" class="form-control" >
+                                            <select id="accidentType" name="accidentType" class="form-control">
                                                 <option selected disabled>Select Accident Type</option>
                                                 <option value="Person and Car">Person and Car</option>
                                                 <option value="Person and Bus">Person and Bus</option>
@@ -115,6 +119,66 @@
                                     </div>
                                 </div>                            
                             </div>
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Motor Vehicles</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <?php
+                                            $template = array(
+                                                'table_open'=> '<table border="0" id="dataTableCars" cellpadding="0" class="table table-bordered">',                                        
+                                                'id'=>'dataTableCars',
+                                                'width'=>'100%',
+                                                'cellspacing'=>'0'
+                                            );
+
+                                            $this->table->set_heading('Id','Motor Vehicle Type', 'Colour', 'Number Plate', 'Add');
+                                            $select = array('Car' => 'car',
+                                                            'Tuktuk' => 'Tuktuk',
+                                                            'Truck' => 'Truck',
+                                                            'Bus' =>'Bus',
+                                                            'Motor Bike' => 'Motor Bike');
+                                            
+                                            $dropdown = '<select id="carType_1" name="carType_1" class="form-control" onChange="hello(`carType_1`)">'.
+                                                        '   <option selected disabled>Select Motor Vehicle Type</option>'.
+                                                        '   <option value="Car">Car</option>'.
+                                                        '   <option value="Tuktuk">Tuktuk</option>'.
+                                                        '   <option value="Truck">Truck</option>'.
+                                                        '   <option value="Bus">Bus</option>'.
+                                                        '   <option value="Motor Bike">Motor Bike</option>'.
+                                                        '</select>';
+
+                                            $color = array('class' => 'form-control',
+                                                            'id'=>'colour_1',
+                                                            'name'=>'colour_1',
+                                                            'type' => 'text',
+                                                            'placeholder' => 'Colour',
+                                                            'required' =>'required'
+                                                            );
+
+                                            $numberPlate = array('class' => 'form-control',
+                                                            'id'=>'numberPlate_1',
+                                                            'name'=>'numberPlate_1',
+                                                            'type' => 'text',
+                                                            'placeholder' => 'Number Plate',
+                                                            'required' =>'required'
+                                                            );
+
+                                            $btn = array('class' => 'btn btn-primary btn-block',
+                                                        'value' => 'Add',
+                                                        'name' => 'add_row',
+                                                        'id' =>'add_row',
+                                                        'type' => 'submit');
+                                            $btn_add = '<button type="button" onClick="add_new_row()" id="add_row" class="btn btn-default"><i class="fa fa-plus"></i></button>';
+                                            $this->table->add_row('1', $dropdown, form_input($color), form_input($numberPlate), $btn_add);
+                                            $this->table->set_template($template);
+                                            echo $this->table->generate();
+                                        ?>
+                                    </div>
+                                    <button type="button" onClick="enableReportAccidentButton()" id="add_row" class="btn btn-default">Update</i></button>
+                                </div>
+                            </div>                            
                             <div class="form-group">
                                 <div class="form-row">                                
                                     <div class="col-md-6">
@@ -159,6 +223,8 @@
                                 $btn = array('class' => 'btn btn-primary btn-block',
                                             'value' => 'Report Accident',
                                             'name' => 'submit',
+                                            'id'=>'submit',
+                                            'disabled'=> 'disabled',
                                             'type' => 'submit');
                                 echo form_submit($btn);        
                                 echo form_close();

@@ -21,8 +21,11 @@ class Accidents extends CI_Controller {
     function viewdetails($id)
     {
         $this->load->model('model_accidents');
+        $this->load->model('model_motorvehicles');
+
         $data['accident'] = $this->model_accidents->getaccidentdetailsoverid($id);
         $data['images'] = $this->model_accidents->getimagesoveruuid($data['accident'][0]['UUID']);
+        $data['motorvehicles'] = $this->model_motorvehicles->getmotorvehiclesoveruuid($data['accident'][0]['UUID']);
         //print_r($data['images']);die();
         $data['title'] = 'Accident Reporting System | Accidents - ' .$id;
 
@@ -50,6 +53,7 @@ class Accidents extends CI_Controller {
     function addaccidenttodb()
     {
         $this->load->model('model_accidents');
+        $this->load->model('model_motorvehicles');
         $message = 'Accident Report Added Successfully';
         $county = $this->input->post('county');
         $subCounty = $this->input->post('subCounty');
@@ -118,6 +122,46 @@ class Accidents extends CI_Controller {
             }
     
         }
+
+        $mvs = $this->input->post('motorvehicletypes');
+        $cls = $this->input->post('colours');
+        $nps = $this->input->post('numberplates');
+
+        $motorvehicles = explode(",", $mvs);
+        $colours = explode(",", $cls);
+        $numberplates = explode(",", $nps);
+
+        $index = 0;
+
+        // print_r($motorvehicles);
+        // die();
+        while(true){
+            // print_r("colours count : ".count($colours));
+            if($index >= count($colours))
+            {
+                break;
+            }
+
+            try{
+                // print_r("index : ".$index);
+                $motorvehicle = $motorvehicles[$index];
+                $colour = $colours[$index];
+                $numberplate = $numberplates[$index];
+
+                $data = array(
+                    "AccidentUUID" => $uuid,
+                    "MotorVehicleType" => $motorvehicle,
+                    "NumberPlate" => $numberplate,
+                    "Color" =>$colour
+                );
+                $ret = $this->model_motorvehicles->addtodatabase($data);
+            }
+            catch(Exception $e){
+                break;
+            }
+            $index = $index + 1;
+        }
+
         $this->session->set_flashdata('message_no', 1);
         $this->session->set_flashdata('message', $message);
         redirect('accidents/addaccident', 'refresh');

@@ -22,8 +22,15 @@
                             
                                         $this->table->set_heading('User Id', 'First Name', 'Last Name', 'User Type', 'Email', 'Mobile No.', 'Last Login', 'Remove User');
                                         foreach ($users as $user)
-                                        {                       
-                                            $this->table->add_row($user['UserId'], $user['FirstName'], $user['LastName'], $user['UserType'], $user['Email'], $user['MobileNo'], $user['LastLogin'], anchor('main/removeuser/'.$user['UserId'], 'Remove'));
+                                        {
+                                            if($user['UserType'] != 'Admin')
+                                            {
+                                                $this->table->add_row($user['UserId'], $user['FirstName'], $user['LastName'], $user['UserType'], $user['Email'], $user['MobileNo'], $user['LastLogin'], anchor('main/removeuser/'.$user['UserId'], 'Remove'));
+                                            }
+                                            else
+                                            {
+                                                $this->table->add_row($user['UserId'], $user['FirstName'], $user['LastName'], $user['UserType'], $user['Email'], $user['MobileNo'], $user['LastLogin']);
+                                            }
                                         }
                                         $this->table->add_row('<b>User Id</b>', '<b>First Name</b>', '<b>Last Name</b>', '<b>User Type</b>', '<b>Email</b>', '<b>Mobile No.</b>', '<b>Last Login</b>', '<b>Remove User</b>');
                                         $this->table->set_template($template);

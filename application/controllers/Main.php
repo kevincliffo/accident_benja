@@ -10,10 +10,20 @@ class Main extends CI_Controller {
     function dashboard()
     {
         $data['title'] = 'Accident Reporting System';
+        $data['accidentSummary'] = $this->getAccidentsSummary();
 
         $this->load->view('includes/header', $data);
         $this->load->view('view_dashboard', $data);
         $this->load->view('includes/footer', $data);
+
+    }
+
+    function getAccidentsSummary()
+    {
+        $this->load->model('model_accidents');
+
+        $accidentSummary = $this->model_accidents->getAccidentsSummary();
+        return $accidentSummary;
     }
 
     function adduser()
@@ -169,4 +179,13 @@ class Main extends CI_Controller {
             redirect('main/register', 'refresh');
         }
     }
+
+	public function getAccidentsForCurrentYearPerMonth()
+	{
+        $this->load->model('model_accidents');
+        $companyName = $this->input->post('CompanyName');
+        $year = date('Y');
+		$customer = $this->model_accidents->getAccidentsForCurrentYearPerMonth($year);
+		echo json_encode($customer);
+    }    
 }
