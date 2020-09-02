@@ -11,6 +11,7 @@ class Main extends CI_Controller {
     {
         $data['title'] = 'Accident Reporting System';
         $data['accidentSummary'] = $this->getAccidentsSummary();
+        $data['faviconpartpath'] = base_url().'img/favicon.png';
 
         $this->load->view('includes/header', $data);
         $this->load->view('view_dashboard', $data);
@@ -31,6 +32,7 @@ class Main extends CI_Controller {
         $this->load->model('model_users');
         $data['title'] = 'Users';
         $data['randompassword'] = $this->generaterandomPassword();
+        $data['faviconpartpath'] = base_url().'img/favicon.png';
 
         $this->load->view('includes/header', $data);
         $this->load->view('view_add_user', $data);
@@ -41,6 +43,7 @@ class Main extends CI_Controller {
     {
         $this->load->model('model_users');
         $data['counties'] = $this->model_users->getallcounties();
+        $data['faviconpartpath'] = base_url().'img/favicon.png';
         $data['title'] = 'Users';
 
         $this->load->view('includes/header', $data);
@@ -82,6 +85,7 @@ class Main extends CI_Controller {
     {
         $this->load->model('model_users');
         $data['users'] = $this->model_users->getallusers();
+        $data['faviconpartpath'] = base_url().'img/favicon.png';
         $data['title'] = 'Users';
 
         $this->load->view('includes/header', $data);

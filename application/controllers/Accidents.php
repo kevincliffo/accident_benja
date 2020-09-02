@@ -12,6 +12,7 @@ class Accidents extends CI_Controller {
         $this->load->model('model_accidents');
         $data['accidents'] = $this->model_accidents->getallaccidents();
         $data['title'] = 'Accident Reporting System | Accidents';
+        $data['faviconpartpath'] = base_url().'img/favicon.png';
 
         $this->load->view('includes/header', $data);
         $this->load->view('view_accidents', $data);
@@ -28,6 +29,7 @@ class Accidents extends CI_Controller {
         $data['motorvehicles'] = $this->model_motorvehicles->getmotorvehiclesoveruuid($data['accident'][0]['UUID']);
         //print_r($data['images']);die();
         $data['title'] = 'Accident Reporting System | Accidents - ' .$id;
+        $data['faviconpartpath'] = base_url().'img/favicon.png';
 
         $this->load->view('includes/header', $data);
         $this->load->view('view_single_accident', $data);
@@ -37,6 +39,7 @@ class Accidents extends CI_Controller {
     function addaccident()
     {
         $this->load->model('model_accidents');
+        $data['faviconpartpath'] = base_url().'img/favicon.png';
         $data['counties'] = $this->model_accidents->getallcounties();
         $data['title'] = 'Accident Reporting System | Report Accident';
 
@@ -172,6 +175,7 @@ class Accidents extends CI_Controller {
         $this->load->model('model_users');
         $data['users'] = $this->model_users->getallusers();
         $data['title'] = 'Users';
+        $data['faviconpartpath'] = base_url().'img/favicon.png';
 
         $this->load->view('includes/header', $data);
         $this->load->view('view_users', $data);

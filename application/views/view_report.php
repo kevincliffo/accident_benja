@@ -1,7 +1,7 @@
                     <div class="container-fluid">
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Users</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Monthly Report</h1>
                             <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
                         </div>
                         
@@ -41,6 +41,12 @@
                                                 <option value="Bus">Bus</option>
                                                 <option value="Cart">Cart</option>
                                             </select>
+                                            <!-- <br>
+                                            <select class="form-control" title="County" name="county" id="county" required disabled>
+                                                <option value="0" selected disabled>Select County</option>
+                                                <option value="Mombasa">Mombasa</option>
+                                                <option value="Nairobi">Nairobi</option>
+                                            </select> -->
                                         </div>
                                     </div>
                                 </div>
