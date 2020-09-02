@@ -61,7 +61,6 @@ function callback(vals)
     var result = vals.map(function (x) { 
         return parseInt(x, 10); 
       });
-    console.log('result: ' + result);
 
     var myLineChart = new Chart(ctx, {
         type: 'line',

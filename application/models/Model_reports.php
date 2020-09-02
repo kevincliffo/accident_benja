@@ -1,5 +1,5 @@
 <?php
-class Model_Accidents extends CI_Model {
+class Model_Reports extends CI_Model {
     public function getallcounties()
     {
         $this->db->query("SET sql_mode = '' ");
@@ -18,7 +18,7 @@ class Model_Accidents extends CI_Model {
     function addtodatabase($data)
     {
         $this->db->query("SET sql_mode = '' ");
-        $insert = $this->db->insert('accidents', $data);
+        $insert = $this->db->insert('reports', $data);
         return $insert;
     }
 
@@ -29,12 +29,12 @@ class Model_Accidents extends CI_Model {
         return $insert;
     }    
     
-    public function getallaccidents()
+    public function getallreports()
     {
         $this->db->query("SET sql_mode = '' ");
         $this->db->select('*'); 
         $this->db->order_by('Id', 'ASC');
-        $query = $this->db->get('accidents');
+        $query = $this->db->get('reports');
         
         if ($query->num_rows() > 0)
         {
@@ -44,12 +44,12 @@ class Model_Accidents extends CI_Model {
         }
     }
     
-    public function getaccidentdetailsoverid($id)
+    public function getreportdetailsoverid($id)
     {
         $this->db->query("SET sql_mode = '' ");
         $this->db->where('Id', $id);
 
-        $query = $this->db->get('accidents');
+        $query = $this->db->get('reports');
 
         if ($query->num_rows() > 0)
         {
@@ -62,7 +62,7 @@ class Model_Accidents extends CI_Model {
     public function getimagesoveruuid($uuid)
     {
         $this->db->query("SET sql_mode = '' ");
-        $this->db->where('AccidentUUID', $uuid);
+        $this->db->where('ReportUUID', $uuid);
 
         $query = $this->db->get('images');
 
@@ -74,42 +74,42 @@ class Model_Accidents extends CI_Model {
         }
     }
     
-    public function getAccidentsSummary()
+    public function getReportsSummary()
     {
-        $sqlCar = "SELECT COUNT(Id) AS Count_ID FROM accidents WHERE AccidentType LIKE '%Car%'";
+        $sqlCar = "SELECT COUNT(Id) AS Count_ID FROM reports WHERE ReportType LIKE '%Car%'";
         $query = $this->db->query($sqlCar);
         $cars = $query->result_array()[0]['Count_ID'];
 
-        $sqlMotorBike = "SELECT COUNT(Id) AS Count_ID FROM accidents WHERE AccidentType LIKE '%Motorbike%'";
+        $sqlMotorBike = "SELECT COUNT(Id) AS Count_ID FROM reports WHERE ReportType LIKE '%Motorbike%'";
         $query = $this->db->query($sqlMotorBike);
         $motorbikes = $query->result_array()[0]['Count_ID'];
         
-        $sqlBicycle = "SELECT COUNT(Id) AS Count_ID FROM accidents WHERE AccidentType LIKE '%Bicycle%'";
+        $sqlBicycle = "SELECT COUNT(Id) AS Count_ID FROM reports WHERE ReportType LIKE '%Bicycle%'";
         $query = $this->db->query($sqlBicycle);
         $bicycles = $query->result_array()[0]['Count_ID'];
         
-        $sqlBus = "SELECT COUNT(Id) AS Count_ID FROM accidents WHERE AccidentType LIKE '%Bus%'";
+        $sqlBus = "SELECT COUNT(Id) AS Count_ID FROM reports WHERE ReportType LIKE '%Bus%'";
         $query = $this->db->query($sqlBus);
         $buses = $query->result_array()[0]['Count_ID'];
         
-        $sqlTruck = "SELECT COUNT(Id) AS Count_ID FROM accidents WHERE AccidentType LIKE '%Truck%'";
+        $sqlTruck = "SELECT COUNT(Id) AS Count_ID FROM reports WHERE ReportType LIKE '%Truck%'";
         $query = $this->db->query($sqlTruck);
         $trucks = $query->result_array()[0]['Count_ID'];
         
-        $sqlCart = "SELECT COUNT(Id) AS Count_ID FROM accidents WHERE AccidentType LIKE '%Cart%'";
+        $sqlCart = "SELECT COUNT(Id) AS Count_ID FROM reports WHERE ReportType LIKE '%Cart%'";
         $query = $this->db->query($sqlCart);
         $carts = $query->result_array()[0]['Count_ID'];
         
-        $sqlPerson = "SELECT COUNT(Id) AS Count_ID FROM accidents WHERE AccidentType LIKE '%Person%'";
+        $sqlPerson = "SELECT COUNT(Id) AS Count_ID FROM reports WHERE ReportType LIKE '%Person%'";
         $query = $this->db->query($sqlPerson);
         $persons = $query->result_array()[0]['Count_ID'];
         
-        $sqlTuktuk = "SELECT COUNT(Id) AS Count_ID FROM accidents WHERE AccidentType LIKE '%Tuktuk%'";
+        $sqlTuktuk = "SELECT COUNT(Id) AS Count_ID FROM reports WHERE ReportType LIKE '%Tuktuk%'";
         $query = $this->db->query($sqlTuktuk);
         $tuktuks = $query->result_array()[0]['Count_ID'];
         
 
-        $accidentSummary = array(
+        $reportSummary = array(
             'Cars' => $cars,
             'Motorbikes' => $motorbikes,
             'Bicycles' => $bicycles,
@@ -120,16 +120,16 @@ class Model_Accidents extends CI_Model {
             'Tuktuks' => $tuktuks,
         );
 
-        return $accidentSummary;
+        return $reportSummary;
     }
 
-    public function getAccidentsForCurrentYearPerMonth($year)
+    public function getReportsForCurrentYearPerMonth($year)
     {
         $stringYear = strval($year);
         $stringMonth = '';
         $stringYearMonth = '';
         $monthValue = 1;
-        $accidentValues = array();
+        $reportValues = array();
 
         for ($monthIndex = 0; $monthIndex <= 12; $monthIndex++) {
             $stringMonth = strval($monthValue);
@@ -139,42 +139,42 @@ class Model_Accidents extends CI_Model {
                 $stringMonth = "0".$monthValue;
             }
             $stringYearMonth = $stringYear."-".$stringMonth;
-            $sql = "SELECT COUNT(Id) AS Count_ID FROM accidents WHERE AccidentDate LIKE '%".$stringYearMonth."%'";
+            $sql = "SELECT COUNT(Id) AS Count_ID FROM reports WHERE ReportDate LIKE '%".$stringYearMonth."%'";
             $query = $this->db->query($sql);
             $value = $query->result_array()[0]['Count_ID'];
 
-            $accidentValues[$monthIndex] = $value;
+            $reportValues[$monthIndex] = $value;
             $monthValue = $monthValue + 1;
         }
 
         return array(
-            'Jan' =>$accidentValues[0],
-            'Feb' =>$accidentValues[1],
-            'Mar' =>$accidentValues[2],
-            'Apr' =>$accidentValues[3],
-            'May' =>$accidentValues[4],
-            'Jun' =>$accidentValues[5],
-            'Jul' =>$accidentValues[6],
-            'Aug' =>$accidentValues[7],
-            'Sep' =>$accidentValues[8],
-            'Oct' =>$accidentValues[9],
-            'Nov' =>$accidentValues[10],
-            'Dec' =>$accidentValues[11],
-        );
-    }
+            'Jan' =>$reportValues[0],
+            'Feb' =>$reportValues[1],
+            'Mar' =>$reportValues[2],
+            'Apr' =>$reportValues[3],
+            'May' =>$reportValues[4],
+            'Jun' =>$reportValues[5],
+            'Jul' =>$reportValues[6],
+            'Aug' =>$reportValues[7],
+            'Sep' =>$reportValues[8],
+            'Oct' =>$reportValues[9],
+            'Nov' =>$reportValues[10],
+            'Dec' =>$reportValues[11],
+        );        
 
-    public function getAccidentsOverFilter($month, $accidentType)
-    {
-        $year = date('Y');
-        if(strlen($month) == 1)
-        {
-            $month = "0".$month;
-        }
-        $datePart = strval($year)."-".$month;
-        $sql = "SELECT * FROM accidents WHERE AccidentType LIKE '%".$accidentType."%' AND AccidentDate LIKE '%".$datePart."%' ORDER BY Id DESC";
-        $query = $this->db->query($sql);
-        $accidents = $query->result_array();
-
-        return $accidents;
+        // return array(
+        //     'Jan' =>400,
+        //     'Feb' =>1400,
+        //     'Mar' =>1100,
+        //     'Apr' =>50,
+        //     'May' =>700,
+        //     'Jun' =>100,
+        //     'Jul' =>1400,
+        //     'Aug' =>1000,
+        //     'Sep' =>70,
+        //     'Oct' =>1300,
+        //     'Nov' =>10,
+        //     'Dec' =>1,
+        // );
     }
 }

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Accidents extends CI_Controller {
+class Reports extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->helper('url');
@@ -9,56 +9,68 @@ class Accidents extends CI_Controller {
 
 	public function index()
 	{
-        $this->load->model('model_accidents');
-        $data['accidents'] = $this->model_accidents->getallaccidents();
-        $data['title'] = 'Accident Reporting System | Accidents';
+        $this->load->model('model_reports');
+        $data['reports'] = $this->model_reports->getallreports();
+        $data['title'] = 'Report Reporting System | Reports';
 
         $this->load->view('includes/header', $data);
-        $this->load->view('view_accidents', $data);
+        $this->load->view('view_reports', $data);
         $this->load->view('includes/footer', $data);
     }
 
     function viewdetails($id)
     {
-        $this->load->model('model_accidents');
+        $this->load->model('model_reports');
         $this->load->model('model_motorvehicles');
 
-        $data['accident'] = $this->model_accidents->getaccidentdetailsoverid($id);
-        $data['images'] = $this->model_accidents->getimagesoveruuid($data['accident'][0]['UUID']);
-        $data['motorvehicles'] = $this->model_motorvehicles->getmotorvehiclesoveruuid($data['accident'][0]['UUID']);
+        $data['report'] = $this->model_reports->getreportdetailsoverid($id);
+        $data['images'] = $this->model_reports->getimagesoveruuid($data['report'][0]['UUID']);
+        $data['motorvehicles'] = $this->model_motorvehicles->getmotorvehiclesoveruuid($data['report'][0]['UUID']);
         //print_r($data['images']);die();
-        $data['title'] = 'Accident Reporting System | Accidents - ' .$id;
+        $data['title'] = 'Report Reporting System | Reports - ' .$id;
 
         $this->load->view('includes/header', $data);
-        $this->load->view('view_single_accident', $data);
+        $this->load->view('view_single_report', $data);
         $this->load->view('includes/footer', $data);
     }
 
-    function addaccident()
+    function addreport()
     {
-        $this->load->model('model_accidents');
-        $data['counties'] = $this->model_accidents->getallcounties();
-        $data['title'] = 'Accident Reporting System | Report Accident';
+        $this->load->model('model_reports');
+        $data['counties'] = $this->model_reports->getallcounties();
+        $data['title'] = 'Report Reporting System | Report Report';
 
         $this->load->view('includes/header', $data);
-        $this->load->view('view_report_accident', $data);
+        $this->load->view('view_report_report', $data);
         $this->load->view('includes/footer', $data);
     }
+
+    function monthly()
+    {
+        $this->load->model('model_reports');
+        $data['counties'] = $this->model_reports->getallcounties();
+        $data['title'] = 'Report Reporting System | Monthly Report';
+
+        $this->load->view('includes/header', $data);
+        $this->load->view('view_report', $data);
+        $this->load->view('includes/footer', $data);
+    }
+
     function uuid(){
         $data = random_bytes(16);
         $data[6] = chr(ord($data[6]) & 0x0f | 0x40); 
         $data[8] = chr(ord($data[8]) & 0x3f | 0x80); 
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
     }
-    function addaccidenttodb()
+    function addreporttodb()
     {
-        $this->load->model('model_accidents');
+        $this->load->model('model_reports');
         $this->load->model('model_motorvehicles');
-        $message = 'Accident Report Added Successfully';
+        $message = 'Report Report Added Successfully';
         $county = $this->input->post('county');
         $subCounty = $this->input->post('subCounty');
         $location = $this->input->post('location');
-        $accidentType = $this->input->post('accidentType');
+        $reportType = $this->input->post('reportType');
         $details = $this->input->post('details');
         $reporter = $this->session->userdata('Email');
 
@@ -68,13 +80,13 @@ class Accidents extends CI_Controller {
             'County'   => $county,
             'SubCounty'   => $subCounty,
             'Location'   => $location,
-            'AccidentType'   => $accidentType,
+            'ReportType'   => $reportType,
             'ReportedBy'   => $reporter,
             'Details'  => $details,
             'UUID' => $uuid
         );
 
-        $ret = $this->model_accidents->addtodatabase($data);
+        $ret = $this->model_reports->addtodatabase($data);
 
         $countfiles = count($_FILES['files']['name']);
 
@@ -108,12 +120,12 @@ class Accidents extends CI_Controller {
                     $data['filenames'][] = $filename;
 
                     $image_data = array(
-                        'AccidentUUID' => $uuid,
+                        'ReportUUID' => $uuid,
                         'Name' => $filename,
                         'Path' => 'uploads/'.$filename
                     );
 
-                    $ret = $this->model_accidents->addimagetodatabase($image_data);
+                    $ret = $this->model_reports->addimagetodatabase($image_data);
 
                 }
                 else{
@@ -149,7 +161,7 @@ class Accidents extends CI_Controller {
                 $numberplate = $numberplates[$index];
 
                 $data = array(
-                    "AccidentUUID" => $uuid,
+                    "ReportUUID" => $uuid,
                     "MotorVehicleType" => $motorvehicle,
                     "NumberPlate" => $numberplate,
                     "Color" =>$colour
@@ -164,7 +176,7 @@ class Accidents extends CI_Controller {
 
         $this->session->set_flashdata('message_no', 1);
         $this->session->set_flashdata('message', $message);
-        redirect('accidents/addaccident', 'refresh');
+        redirect('reports/addreport', 'refresh');
     }    
 
     function allusers()
@@ -177,14 +189,4 @@ class Accidents extends CI_Controller {
         $this->load->view('view_users', $data);
         $this->load->view('includes/footer', $data);
     }
-
-	public function getAccidentsOverFilter()
-	{
-        $this->load->model('model_accidents');
-        $month = $this->input->post('Month');
-        $accidentType = $this->input->post('AccidentType');
-
-		$accidents = $this->model_accidents->getAccidentsOverFilter($month, $accidentType);
-		echo json_encode($accidents);
-    }    
 }

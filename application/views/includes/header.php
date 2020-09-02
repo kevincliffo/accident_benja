@@ -63,6 +63,21 @@
                         </div>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReports" aria-expanded="true" aria-controls="collapseReports">
+                        <i class="fas fa-fw fa-file"></i>
+                        <span>Reports</span>
+                    </a>
+                    <div id="collapseReports" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Accidents:</h6>
+                            <?php echo anchor('reports/accidenttype', 'Accident Type', 'class="collapse-item"');?>
+                            <?php echo anchor('reports/monthly', 'Monthly', 'class="collapse-item"');?>
+                            <?php echo anchor('reports/yearly', 'Yearly', 'class="collapse-item"');?>
+                            <?php echo anchor('reports/county', 'County', 'class="collapse-item"');?>
+                        </div>
+                    </div>
+                </li>
                 <!-- Divider -->
                 <hr class="sidebar-divider" />
                 <!-- Heading -->

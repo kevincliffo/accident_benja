@@ -50,8 +50,96 @@
         <script src="<?php echo base_url(); ?>js/demo/chart-pie-demo.js"></script>
         
         <script type="text/javascript">
-            $(window).on("unload", function(){                
-            });
+            function refreshTable(table, rows)
+            {
+                while(true)
+                {
+                    if(rows == 1)
+                    {
+                        break;
+                    }
+                    
+                    for(var i = rows-1; i > 0; i--)
+                    {
+                        if(i == 0)
+                        {
+
+                        }
+                        else
+                        {
+                            table.deleteRow(i);
+                        }
+                    }
+                    break;
+                }
+            }
+        </script>
+
+        <script type="text/javascript">
+            function generateReport()
+            {
+                var base_url = "<?php echo base_url(); ?>";
+                var month = document.getElementById("month");
+                var accidentType = document.getElementById("accidentType");
+                var btngenerateReportData = document.getElementById("generateReportData");
+                btngenerateReportData.disabled = true;
+                
+                var table = document.getElementById("dataTableReports");
+                var rows = $("#dataTableReports tbody tr").length;
+
+                refreshTable(table, rows);
+
+                var table = document.getElementById("dataTableReports");
+                var rows = $("#dataTableReports tbody tr").length;
+
+                $.ajax({
+                    url: base_url + 'accidents/getAccidentsOverFilter/',
+                    type: 'post',
+                    data: {Month : month.value, AccidentType:accidentType.value},
+                    dataType: 'json',
+                    success:function(response) {
+                        $.each(response, function(index, value) {
+                            var row = table.insertRow(rows);
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            var cell3 = row.insertCell(2);
+                            var cell4 = row.insertCell(3);
+                            var cell5 = row.insertCell(4);
+                            var cell6 = row.insertCell(5);
+                            var cell7 = row.insertCell(6);
+                            var cell8 = row.insertCell(7);
+
+                            cell1.innerHTML = value.Id;
+                            cell2.innerHTML = value.ReportedBy;
+                            cell3.innerHTML = value.County;
+                            cell4.innerHTML = value.SubCounty;
+                            cell5.innerHTML = "Kongowea";
+                            cell6.innerHTML = "Motorbike";
+                            cell7.innerHTML = value.Details;
+                            cell8.innerHTML = value.AccidentDate;                            
+                        });
+                    }
+                });
+            }
+        </script>
+        <script type="text/javascript">
+            function printReport(divName)
+            {
+                var printingArea = document.getElementById(divName).innerHTML;
+                var allArea = document.body.innerHTML;
+                var month = document.getElementById("month");
+                var accidentType = document.getElementById("accidentType");
+                monthValue = month.value;
+                accidentTypeValue = accidentType.value;
+
+                document.body.innerHTML = printingArea;
+                window.print();
+                document.body.innerHTML = allArea;
+                var month = document.getElementById("month");
+                var accidentType = document.getElementById("accidentType");
+                month.selectedIndex = monthValue;
+                accidentType.value = accidentTypeValue;
+            }
         </script>
         <script type="text/javascript">
             function enableReportAccidentButton(){
