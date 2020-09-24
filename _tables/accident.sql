@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 11, 2020 at 12:47 PM
+-- Generation Time: Sep 02, 2020 at 05:29 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -45,7 +45,10 @@ CREATE TABLE `accidents` (
 --
 
 INSERT INTO `accidents` (`Id`, `UUID`, `ReportedBy`, `County`, `SubCounty`, `Location`, `AccidentType`, `Details`, `AccidentDate`) VALUES
-(1, '80dae4eb-b683-4c1b-840d-9cac3fb514ba', 'kevin.njagi@yahoo.com', 'Mombasa', 'Nyali', 'Cinemax', 'Person and Motorbike', 'Person hit by motorbike while coming out of Chandarana Supermarket Nyali.', '2020-07-29 22:25:07');
+(1, '80dae4eb-b683-4c1b-840d-9cac3fb514ba', 'kevin.njagi@yahoo.com', 'Mombasa', 'Nyali', 'Cinemax', 'Person and Motorbike', 'Person hit by motorbike while coming out of Chandarana Supermarket Nyali.', '2020-07-29 22:25:07'),
+(2, '4bb30421-45ad-4803-a169-b9997b3a7dfe', NULL, 'Mombasa', 'Nyali', 'Cinemax', 'Person and Motorbike', 'Two motorbikes collide and hit pedestrian at Nyali Cinemax.', '2020-08-17 14:52:23'),
+(12, 'c9535edf-a547-48a7-ae23-f8cffa85e073', NULL, 'Taita/Taveta', 'Taveta Town', 'Town', 'Person and Motorbike', 'Motorbikes collided and hit pedestrian.', '2020-08-17 15:17:11'),
+(13, 'e3c3e430-aecc-4cca-861a-dba759ad85b1', 'admin@yahoo.com', 'Mombasa', 'Nyai', 'Ratna', 'Bicycle and Motorbike', 'Motorbike and Bicycle head-on collision.', '2020-09-01 12:33:15');
 
 -- --------------------------------------------------------
 
@@ -130,7 +133,34 @@ CREATE TABLE `images` (
 
 INSERT INTO `images` (`Id`, `AccidentUUID`, `Name`, `Path`) VALUES
 (1, '80dae4eb-b683-4c1b-840d-9cac3fb514ba', 'bike-human2.jpg', 'uploads/bike-human2.jpg'),
-(2, '80dae4eb-b683-4c1b-840d-9cac3fb514ba', 'bike-human.jpg', 'uploads/bike-human.jpg');
+(2, '80dae4eb-b683-4c1b-840d-9cac3fb514ba', 'bike-human.jpg', 'uploads/bike-human.jpg'),
+(13, 'c9535edf-a547-48a7-ae23-f8cffa85e073', 'class.jpg', 'uploads/class.jpg'),
+(14, 'e3c3e430-aecc-4cca-861a-dba759ad85b1', 'side_project.jpg', 'uploads/side_project.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `motorvehicles`
+--
+
+CREATE TABLE `motorvehicles` (
+  `Id` int(11) NOT NULL,
+  `AccidentUUID` varchar(255) NOT NULL,
+  `MotorVehicleType` varchar(255) NOT NULL,
+  `NumberPlate` varchar(50) NOT NULL,
+  `Color` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `motorvehicles`
+--
+
+INSERT INTO `motorvehicles` (`Id`, `AccidentUUID`, `MotorVehicleType`, `NumberPlate`, `Color`) VALUES
+(1, 'c9535edf-a547-48a7-ae23-f8cffa85e073', 'Motor Bike', 'KJHZ 625J', 'White'),
+(2, 'c9535edf-a547-48a7-ae23-f8cffa85e073', 'Motor Bike', 'KJUZ 256G', 'Black'),
+(3, 'c9535edf-a547-48a7-ae23-f8cffa85e073', 'Motor Bike', 'KJHZ 245R', 'Green'),
+(4, 'e3c3e430-aecc-4cca-861a-dba759ad85b1', 'Bicycle', 'NA', 'Black'),
+(5, 'e3c3e430-aecc-4cca-861a-dba759ad85b1', 'Motor Bike', 'KGTZ 878L', 'Black');
 
 -- --------------------------------------------------------
 
@@ -175,6 +205,12 @@ ALTER TABLE `images`
   ADD PRIMARY KEY (`Id`);
 
 --
+-- Indexes for table `motorvehicles`
+--
+ALTER TABLE `motorvehicles`
+  ADD PRIMARY KEY (`Id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -188,13 +224,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accidents`
 --
 ALTER TABLE `accidents`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `motorvehicles`
+--
+ALTER TABLE `motorvehicles`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
