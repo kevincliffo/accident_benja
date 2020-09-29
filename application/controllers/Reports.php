@@ -64,7 +64,7 @@ class Reports extends CI_Controller {
     {
         $this->load->model('model_reports');
         $data['counties'] = $this->model_reports->getallcounties();
-        $data['title'] = 'Report Reporting System | Monthly Report';
+        $data['title'] = 'Report Reporting System | Yearly Report';
         $data['faviconpartpath'] = base_url().'img/favicon.png';
 
         $this->load->view('includes/header', $data);
@@ -76,7 +76,7 @@ class Reports extends CI_Controller {
     {
         $this->load->model('model_reports');
         $data['counties'] = $this->model_reports->getallcounties();
-        $data['title'] = 'Report Reporting System | Monthly Report';
+        $data['title'] = 'Report Reporting System | County Report';
         $data['faviconpartpath'] = base_url().'img/favicon.png';
 
         $this->load->view('includes/header', $data);
@@ -87,7 +87,7 @@ class Reports extends CI_Controller {
     function accidenttype()
     {
         $this->load->model('model_reports');
-        $data['title'] = 'Report Reporting System | Monthly Report';
+        $data['title'] = 'Report Reporting System | Accident Type Report';
         $data['faviconpartpath'] = base_url().'img/favicon.png';
 
         $this->load->view('includes/header', $data);
@@ -98,7 +98,7 @@ class Reports extends CI_Controller {
     function numberplate()
     {
         $this->load->model('model_reports');
-        $data['title'] = 'Report Reporting System | Monthly Report';
+        $data['title'] = 'Report Reporting System | Number Plate Report';
         $data['faviconpartpath'] = base_url().'img/favicon.png';
 
         $this->load->view('includes/header', $data);
