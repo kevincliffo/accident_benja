@@ -56,7 +56,53 @@ class Reports extends CI_Controller {
         $data['faviconpartpath'] = base_url().'img/favicon.png';
 
         $this->load->view('includes/header', $data);
-        $this->load->view('view_report', $data);
+        $this->load->view('view_report_monthly', $data);
+        $this->load->view('includes/footer', $data);
+    }
+
+    function yearly()
+    {
+        $this->load->model('model_reports');
+        $data['counties'] = $this->model_reports->getallcounties();
+        $data['title'] = 'Report Reporting System | Monthly Report';
+        $data['faviconpartpath'] = base_url().'img/favicon.png';
+
+        $this->load->view('includes/header', $data);
+        $this->load->view('view_report_yearly', $data);
+        $this->load->view('includes/footer', $data);
+    }
+
+    function county()
+    {
+        $this->load->model('model_reports');
+        $data['counties'] = $this->model_reports->getallcounties();
+        $data['title'] = 'Report Reporting System | Monthly Report';
+        $data['faviconpartpath'] = base_url().'img/favicon.png';
+
+        $this->load->view('includes/header', $data);
+        $this->load->view('view_report_county', $data);
+        $this->load->view('includes/footer', $data);
+    }
+
+    function accidenttype()
+    {
+        $this->load->model('model_reports');
+        $data['title'] = 'Report Reporting System | Monthly Report';
+        $data['faviconpartpath'] = base_url().'img/favicon.png';
+
+        $this->load->view('includes/header', $data);
+        $this->load->view('view_report_accident_type', $data);
+        $this->load->view('includes/footer', $data);
+    }
+
+    function numberplate()
+    {
+        $this->load->model('model_reports');
+        $data['title'] = 'Report Reporting System | Monthly Report';
+        $data['faviconpartpath'] = base_url().'img/favicon.png';
+
+        $this->load->view('includes/header', $data);
+        $this->load->view('view_report_number_plate', $data);
         $this->load->view('includes/footer', $data);
     }
 

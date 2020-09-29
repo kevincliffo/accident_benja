@@ -37,11 +37,18 @@
                                                 <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password" required>
                                             </div>
                                             <div class="form-group">
+                                                <select name="userType" class="form-control" required>
+                                                    <option selected disabled>Select User Type</option>
+                                                    <option value="User">User</option>
+                                                    <option value="Admin">Admin</option>
+                                                </select>
+                                            </div>
+                                            <!-- <div class="form-group">
                                                 <div class="custom-control custom-checkbox small">
                                                     <input type="checkbox" class="custom-control-input" id="rememberme" name="rememberme">
                                                     <label class="custom-control-label" for="rememberme">Remember Me</label>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         <?php
                                             $btn = array('class' => 'btn btn-primary btn-user btn-block',
                                                 'value' => 'Login',

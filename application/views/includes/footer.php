@@ -31,7 +31,10 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <?php 
+                            $obj = array('class' => 'btn btn-primary');
+                            echo anchor('main/logout', 'Logout', $obj);
+                        ?>                        
                     </div>
                 </div>
             </div>
@@ -79,8 +82,7 @@
             function generateReport()
             {
                 var base_url = "<?php echo base_url(); ?>";
-                var month = document.getElementById("month");
-                var accidentType = document.getElementById("accidentType");
+                var filterType = document.getElementById("filterType");
                 var btngenerateReportData = document.getElementById("generateReportData");
                 btngenerateReportData.disabled = true;
                 
@@ -92,12 +94,55 @@
                 var table = document.getElementById("dataTableReports");
                 var rows = $("#dataTableReports tbody tr").length;
 
+                var monthValue = "";
+                var yearValue = "";
+                var numberPlateValue = "";
+                var accidentTypeValue = "";
+                var countyValue = "";
+
+                switch(filterType.value)
+                {
+                    case "AccidentType":
+                        var accidentType = document.getElementById("accidentType");
+                        accidentTypeValue = accidentType.value;
+                        break;
+                    case "Monthly":
+                        var month = document.getElementById("month");
+                        var accidentType = document.getElementById("accidentType");
+                        monthValue = month.value;
+                        accidentTypeValue = accidentType.value;
+                        break;
+                    case "Yearly":
+                        var year = document.getElementById("year");
+                        var accidentType = document.getElementById("accidentType");
+                        yearValue = year.value;
+                        accidentTypeValue = accidentType.value;
+                        break;
+                    case "NumberPlate":
+                        var numberPlate = document.getElementById("numberPlate");
+                        numberPlateValue = numberPlate.value;
+                        break;
+                    case "County":
+                        var county = document.getElementById("county");
+                        countyValue = county.value;
+                        break;
+
+                }
+                
                 $.ajax({
                     url: base_url + 'accidents/getAccidentsOverFilter/',
                     type: 'post',
-                    data: {Month : month.value, AccidentType:accidentType.value},
+                    data:{
+                            Month : monthValue,
+                            Year : yearValue, 
+                            AccidentType: accidentTypeValue,
+                            NumberPlate: numberPlateValue,
+                            County: countyValue,
+                            FilterType: filterType.value
+                        },
                     dataType: 'json',
                     success:function(response) {
+                        var count = 1;
                         $.each(response, function(index, value) {
                             var row = table.insertRow(rows);
                             var cell1 = row.insertCell(0);
@@ -109,14 +154,16 @@
                             var cell7 = row.insertCell(6);
                             var cell8 = row.insertCell(7);
 
-                            cell1.innerHTML = value.Id;
+                            cell1.innerHTML = index+1;
                             cell2.innerHTML = value.ReportedBy;
                             cell3.innerHTML = value.County;
                             cell4.innerHTML = value.SubCounty;
-                            cell5.innerHTML = "Kongowea";
-                            cell6.innerHTML = "Motorbike";
+                            cell5.innerHTML = value.Location;
+                            cell6.innerHTML = value.AccidentType;
                             cell7.innerHTML = value.Details;
-                            cell8.innerHTML = value.AccidentDate;                            
+                            cell8.innerHTML = value.AccidentDate;
+                            
+                            count = count + 1;
                         });
                     }
                 });

@@ -49,7 +49,7 @@ class Model_Users extends CI_Model {
     {
         $this->db->query("SET sql_mode = '' ");
         $this->db->where('Email', $data['Email']);
-        //$this->db->where('UserType', $data['Email']);
+        $this->db->where('UserType', $data['UserType']);
         $this->db->where('Password', md5($data['Password']));
 
         $query = $this->db->get('users');

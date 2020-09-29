@@ -183,12 +183,27 @@ class Accidents extends CI_Controller {
     }
 
 	public function getAccidentsOverFilter()
-	{
+	{ 
         $this->load->model('model_accidents');
-        $month = $this->input->post('Month');
-        $accidentType = $this->input->post('AccidentType');
 
-		$accidents = $this->model_accidents->getAccidentsOverFilter($month, $accidentType);
+        $data = array(
+            'Month' => $this->input->post('Month'),
+            'AccidentType' => $this->input->post('AccidentType'),
+            'Year' => $this->input->post('Year'),
+            'County' => $this->input->post('County'),
+            'NumberPlate' => $this->input->post('NumberPlate'),
+            'FilterType' => $this->input->post('FilterType')
+        );
+        
+        $file = fopen('output.txt', 'w');
+        fwrite($file, 'Month : '.$this->input->post('Month').'\n');
+        fwrite($file, 'AccidentType : '.$this->input->post('AccidentType').'\n');
+        fwrite($file, 'Year : '.$this->input->post('Year').'\n');
+        fwrite($file, 'County : '.$this->input->post('County').'\n');
+        fwrite($file, 'NumberPlate : '.$this->input->post('NumberPlate').'\n');
+        fwrite($file, 'FilterType : '.$this->input->post('FilterType').'\n');
+        fclose($file);
+		$accidents = $this->model_accidents->getAccidentsOverFilter($data);
 		echo json_encode($accidents);
     }    
 }

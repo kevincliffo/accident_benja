@@ -36,7 +36,11 @@
                 <div class="sidebar-heading">
                     Interface
                 </div>
-                <!-- Nav Item - Pages Collapse Menu -->
+                <!-- Nav Item - Pages Collapse Menu -->                
+                <?php
+                    if($this->session->userdata('UserType') == 'Admin')
+                    {
+                ?>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-users"></i>
@@ -50,6 +54,10 @@
                         </div>
                     </div>
                 </li>
+
+                <?php
+                    }
+                ?>                
                 <!-- Nav Item - Utilities Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
@@ -73,6 +81,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Accidents:</h6>
                             <?php echo anchor('reports/accidenttype', 'Accident Type', 'class="collapse-item"');?>
+                            <?php echo anchor('reports/numberplate', 'Number Plate', 'class="collapse-item"');?>
                             <?php echo anchor('reports/monthly', 'Monthly', 'class="collapse-item"');?>
                             <?php echo anchor('reports/yearly', 'Yearly', 'class="collapse-item"');?>
                             <?php echo anchor('reports/county', 'County', 'class="collapse-item"');?>
@@ -272,8 +281,13 @@
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60" />
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php
+                                        echo $this->session->userdata('FirstName'). ' '.  $this->session->userdata('LastName');
+                                    ?>
+                                    </span>
+                                    <!-- <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60" /> -->
+                                    <img class="img-profile rounded-circle" src="<?php echo base_url(); ?>img/user.jpg" alt="User">
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -293,7 +307,7 @@
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Logout
-                                    </a>
+                                    </a>                                    
                                 </div>
                             </li>
                         </ul>

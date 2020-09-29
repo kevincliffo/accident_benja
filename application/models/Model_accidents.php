@@ -163,15 +163,34 @@ class Model_Accidents extends CI_Model {
         );
     }
 
-    public function getAccidentsOverFilter($month, $accidentType)
+    public function getAccidentsOverFilter($data)
     {
-        $year = date('Y');
-        if(strlen($month) == 1)
-        {
-            $month = "0".$month;
+
+        switch ($data['FilterType']) {
+            case 'AccidentType':
+                $sql = "SELECT * FROM accidents WHERE AccidentType LIKE '%".$data['AccidentType']."%' ORDER BY Id ASC";
+                break;
+            
+            case 'Monthly':
+                $year = date('Y');
+                if(strlen($data['Month']) == 1)
+                {
+                    $data['Month'] = "0".$data['Month'];
+                }
+                $datePart = strval($year)."-".$data['Month'];
+
+                $sql = "SELECT * FROM accidents WHERE AccidentType LIKE '%".$data['AccidentType']."%' AND AccidentDate LIKE '%".$datePart."%' ORDER BY Id ASC";
+                break;
+            
+            case 'Yearly':
+                $sql = "SELECT * FROM accidents WHERE AccidentType LIKE '%".$data['AccidentType']."%' AND AccidentDate LIKE '%".$data['Year']."%' ORDER BY Id ASC";
+                break;
+            
+            case 'County':
+                $sql = "SELECT * FROM accidents WHERE County = '".$data['County']."' ORDER BY Id ASC";
+                break;
         }
-        $datePart = strval($year)."-".$month;
-        $sql = "SELECT * FROM accidents WHERE AccidentType LIKE '%".$accidentType."%' AND AccidentDate LIKE '%".$datePart."%' ORDER BY Id DESC";
+
         $query = $this->db->query($sql);
         $accidents = $query->result_array();
 

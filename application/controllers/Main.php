@@ -9,13 +9,20 @@ class Main extends CI_Controller {
     
     function dashboard()
     {
-        $data['title'] = 'Accident Reporting System';
-        $data['accidentSummary'] = $this->getAccidentsSummary();
-        $data['faviconpartpath'] = base_url().'img/favicon.png';
+        if($this->session->userdata('IsLoggedIn'))
+        {        
+            $data['title'] = 'Accident Reporting System';
+            $data['accidentSummary'] = $this->getAccidentsSummary();
+            $data['faviconpartpath'] = base_url().'img/favicon.png';
 
-        $this->load->view('includes/header', $data);
-        $this->load->view('view_dashboard', $data);
-        $this->load->view('includes/footer', $data);
+            $this->load->view('includes/header', $data);
+            $this->load->view('view_dashboard', $data);
+            $this->load->view('includes/footer', $data);
+        }        
+        else
+        {
+            redirect('main', 'refresh');
+        }        
 
     }
 
@@ -29,26 +36,40 @@ class Main extends CI_Controller {
 
     function adduser()
     {
-        $this->load->model('model_users');
-        $data['title'] = 'Users';
-        $data['randompassword'] = $this->generaterandomPassword();
-        $data['faviconpartpath'] = base_url().'img/favicon.png';
+        if($this->session->userdata('IsLoggedIn'))
+        {
+            $this->load->model('model_users');
+            $data['title'] = 'Users';
+            $data['randompassword'] = $this->generaterandomPassword();
+            $data['faviconpartpath'] = base_url().'img/favicon.png';
 
-        $this->load->view('includes/header', $data);
-        $this->load->view('view_add_user', $data);
-        $this->load->view('includes/footer', $data);
+            $this->load->view('includes/header', $data);
+            $this->load->view('view_add_user', $data);
+            $this->load->view('includes/footer', $data);
+        }        
+        else
+        {
+            redirect('main', 'refresh');
+        }              
     }
 
     function addaccident()
     {
-        $this->load->model('model_users');
-        $data['counties'] = $this->model_users->getallcounties();
-        $data['faviconpartpath'] = base_url().'img/favicon.png';
-        $data['title'] = 'Users';
+        if($this->session->userdata('IsLoggedIn'))
+        {
+            $this->load->model('model_users');
+            $data['counties'] = $this->model_users->getallcounties();
+            $data['faviconpartpath'] = base_url().'img/favicon.png';
+            $data['title'] = 'Users';
 
-        $this->load->view('includes/header', $data);
-        $this->load->view('view_report_accident', $data);
-        $this->load->view('includes/footer', $data);
+            $this->load->view('includes/header', $data);
+            $this->load->view('view_report_accident', $data);
+            $this->load->view('includes/footer', $data);
+        }        
+        else
+        {
+            redirect('main', 'refresh');
+        }          
     }
 
     function addusertodb()
@@ -83,14 +104,21 @@ class Main extends CI_Controller {
 
     function allusers()
     {
-        $this->load->model('model_users');
-        $data['users'] = $this->model_users->getallusers();
-        $data['faviconpartpath'] = base_url().'img/favicon.png';
-        $data['title'] = 'Users';
+        if($this->session->userdata('IsLoggedIn'))
+        {
+            $this->load->model('model_users');
+            $data['users'] = $this->model_users->getallusers();
+            $data['faviconpartpath'] = base_url().'img/favicon.png';
+            $data['title'] = 'Users';
 
-        $this->load->view('includes/header', $data);
-        $this->load->view('view_users', $data);
-        $this->load->view('includes/footer', $data);
+            $this->load->view('includes/header', $data);
+            $this->load->view('view_users', $data);
+            $this->load->view('includes/footer', $data);
+        }        
+        else
+        {
+            redirect('main', 'refresh');
+        }            
     }    
 
     function loginuser()
@@ -99,11 +127,12 @@ class Main extends CI_Controller {
 
         $email = $this->input->post('email');
         $password = $this->input->post('password');
-        $rememberme = $this->input->post('rememberme');
+        $userType = $this->input->post('userType');
 
         $data = array(
             'Email'   => $email,
-            'Password'   => $password
+            'Password'   => $password,
+            'UserType' => $userType
         );
 
         $res = $this->model_users->validate($data);
@@ -124,6 +153,26 @@ class Main extends CI_Controller {
         else{
             redirect('main', 'refresh');
         }
+    }
+
+    function logout()
+    {
+        $sess_array = array(
+            'Email' => '',
+            'UserId' => '',
+            'IsLoggedIn' => FALSE,
+            'UserType' => '',
+            'FirstName' => '',
+            'LastName' => '');
+                     
+        $this->session->set_userdata($sess_array);
+        $this->session->sess_destroy();
+        $data['title'] = 'Login';
+        $data['message'] = 'Successfully Logged Out';
+        $data['faviconpartpath'] = base_url().'images/favicon.png';
+        $data['loggedout'] = TRUE;
+        
+        redirect('main', 'refresh');
     }
 
     function generaterandomPassword() 
