@@ -189,6 +189,10 @@ class Model_Accidents extends CI_Model {
             case 'County':
                 $sql = "SELECT * FROM accidents WHERE County = '".$data['County']."' ORDER BY Id ASC";
                 break;
+
+            case 'NumberPlate':
+                $sql = "SELECT * FROM accidents INNER JOIN motorvehicles ON motorvehicles.AccidentUUID = accidents.UUID where "
+                     . " motorvehicles.NumberPlate = '".$data['NumberPlate']."'";
         }
 
         $query = $this->db->query($sql);

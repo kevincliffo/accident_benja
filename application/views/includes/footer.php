@@ -162,7 +162,19 @@
                             cell6.innerHTML = value.AccidentType;
                             cell7.innerHTML = value.Details;
                             cell8.innerHTML = value.AccidentDate;
+
+                            if(filterType.value == 'NumberPlate')
+                            {
+                                var cell9 = row.insertCell(8);
+                                var cell10 = row.insertCell(9);
+                                var cell11 = row.insertCell(10);
+
+                                cell9.innerHTML = value.MotorVehicleType;
+                                cell10.innerHTML = value.NumberPlate;
+                                cell11.innerHTML = value.Color;
+                            }
                             
+                            rows = $("#dataTableReports tbody tr").length;
                             count = count + 1;
                         });
                     }
@@ -176,16 +188,33 @@
                 var allArea = document.body.innerHTML;
                 var month = document.getElementById("month");
                 var accidentType = document.getElementById("accidentType");
-                monthValue = month.value;
-                accidentTypeValue = accidentType.value;
+                var monthValue = "";
+                var accidentTypeValue = "";
+
+                if(month != null)
+                {
+                    monthValue = month.value;
+                }
+                if(accidentType != null)
+                {
+                    accidentTypeValue = accidentType.value;
+                }
 
                 document.body.innerHTML = printingArea;
                 window.print();
                 document.body.innerHTML = allArea;
-                var month = document.getElementById("month");
-                var accidentType = document.getElementById("accidentType");
-                month.selectedIndex = monthValue;
-                accidentType.value = accidentTypeValue;
+
+                if(accidentType != null)
+                {
+                    var accidentType = document.getElementById("accidentType");
+                    accidentType.value = accidentTypeValue;
+                }
+
+                if(month != null)
+                {
+                    var month = document.getElementById("month");
+                    month.selectedIndex = monthValue;
+                }
             }
         </script>
         <script type="text/javascript">

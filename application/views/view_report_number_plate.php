@@ -40,12 +40,9 @@
                                             'cellspacing'=>'0'
                                         );
                             
-                                        $this->table->set_heading('Id', 'Reported By', 'County', 'Sub-County', 'Location', 'Accident Type', 'Details', 'Accident Date');
-                                        // foreach ($accidents as $accident)
-                                        // {                       
-                                        //     $this->table->add_row($accident['Id'], $accident['ReportedBy'], $accident['County'], $accident['SubCounty'], $accident['Location'], $accident['AccidentType'], $accident['Details'], $accident['AccidentDate'], anchor('accidents/viewdetails/'.$accident['Id'], 'Details'));
-                                        // }
-                                        $this->table->add_row('<b>Id</b>', '<b>Reported By</b>', '<b>County</b>', '<b>Sub-County</b>', '<b>Location</b>', '<b>Accident Type</b>', '<b>Details</b>', '<b>Accident Date</b>');
+                                        $this->table->set_heading('Id', 'Reported By', 'County', 'Sub-County', 'Location', 'Accident Type', 'Details', 'Accident Date', 'Motor Vehicle Type', 'Number Plate', 'Color');
+
+                                        $this->table->add_row('<b>Id</b>', '<b>Reported By</b>', '<b>County</b>', '<b>Sub-County</b>', '<b>Location</b>', '<b>Accident Type</b>', '<b>Details</b>', '<b>Accident Date</b>', '<b>Motor Vehicle Type</b>', '<b>Number Plate</b>', '<b>Color</b>');
                                         $this->table->set_template($template);
                                         echo $this->table->generate();
                                     ?>

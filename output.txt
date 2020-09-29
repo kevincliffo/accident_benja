@@ -1,1 +1,1 @@
-Month : \nAccidentType : \nYear : \nCounty : Mombasa\nNumberPlate : \nFilterType : County\n
+Month : \nAccidentType : Motorbike\nYear : \nCounty : \nNumberPlate : \nFilterType : AccidentType\n
