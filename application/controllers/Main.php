@@ -148,7 +148,7 @@ class Main extends CI_Controller {
             );
             $this->session->set_userdata($data);
 
-            $this->dashboard();
+            redirect('main/dashboard', 'refresh');
         }
         else{
             redirect('main', 'refresh');
