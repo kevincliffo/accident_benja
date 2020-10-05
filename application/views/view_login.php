@@ -25,7 +25,32 @@
                                 <div class="col-lg-12">
                                     <div class="p-5">
                                         <div class="text-center">
-                                            <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                            <?php
+                                                if($this->session->flashdata('hasMessage') == 1)
+                                                {
+                                                    $messageType = $this->session->flashdata('messageType');
+                                                    switch($messageType)
+                                                    {
+                                                        case 0:
+                                                            $alert = "success";
+                                                            break;
+                                                        case 1:
+                                                            $alert = "danger";
+                                                            break;
+                                                    }
+
+                                                    echo '<div class = "alert alert-'.$alert.' alert-dismissable" role="alert">'
+                                                        .'  <button class="close" data-dismiss="alert">'
+                                                        .'      <small><sup><b>X</b></sup></small>'
+                                                        .'  </button>'
+                                                        .   $this->session->flashdata('message')
+                                                        .'</div>';
+                                                }
+                                                else
+                                                {
+                                                    echo '<h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>';
+                                                }
+                                            ?>                                            
                                         </div>
                                         <?php
                                             echo form_open('main/loginuser', 'class="user"');

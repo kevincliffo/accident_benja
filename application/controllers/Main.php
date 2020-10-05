@@ -95,9 +95,15 @@ class Main extends CI_Controller {
 
         if($res)
         {
+            $this->session->set_flashdata('messageType', 0);
+            $this->session->set_flashdata('message', 'User added Successfully!');
+            $this->session->set_flashdata('hasMessage', 1);            
             redirect('main/allusers');
         }
         else{
+            $this->session->set_flashdata('messageType', 1);
+            $this->session->set_flashdata('message', 'Error adding user!');
+            $this->session->set_flashdata('hasMessage', 1);            
             redirect('main/adduser', 'refresh');
         }
     }    
@@ -148,9 +154,15 @@ class Main extends CI_Controller {
             );
             $this->session->set_userdata($data);
 
+            $this->session->set_flashdata('messageType', 0);
+            $this->session->set_flashdata('message', 'Welcome to your Dashboard!');
+            $this->session->set_flashdata('hasMessage', 1);
             redirect('main/dashboard', 'refresh');
         }
         else{
+            $this->session->set_flashdata('messageType', 1);
+            $this->session->set_flashdata('message', 'Wrong Login Details!');
+            $this->session->set_flashdata('hasMessage', 1);            
             redirect('main', 'refresh');
         }
     }
@@ -226,9 +238,15 @@ class Main extends CI_Controller {
 
         if($res)
         {
+            $this->session->set_flashdata('messageType', 0);
+            $this->session->set_flashdata('message', 'Registration Successfull!');
+            $this->session->set_flashdata('hasMessage', 1);            
             redirect('main');
         }
         else{
+            $this->session->set_flashdata('messageType', 1);
+            $this->session->set_flashdata('message', 'Registration Failed!');
+            $this->session->set_flashdata('hasMessage', 1);            
             redirect('main/register', 'refresh');
         }
     }

@@ -312,5 +312,27 @@
                             </li>
                         </ul>
                     </nav>
+                    <?php
+                        if($this->session->flashdata('hasMessage') == 1)
+                        {
+                            $messageType = $this->session->flashdata('messageType');
+                            switch($messageType)
+                            {
+                                case 0:
+                                    $alert = "success";
+                                    break;
+                                case 1:
+                                    $alert = "danger";
+                                    break;
+                            }
+
+                            echo '<div class = "alert alert-'.$alert.' alert-dismissable" role="alert">'
+                                .'  <button class="close" data-dismiss="alert">'
+                                .'      <small><sup><b>X</b></sup></small>'
+                                .'  </button>'
+                                .   $this->session->flashdata('message')
+                                .'</div>';
+                        }
+                    ?>                    
                     <!-- End of Topbar -->
                     <!-- Begin Page Content -->            

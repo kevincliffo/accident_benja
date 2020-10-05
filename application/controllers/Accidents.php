@@ -122,8 +122,7 @@ class Accidents extends CI_Controller {
                 else{
                     $message =+ $this->upload->display_errors();
                 }
-            }
-    
+            }    
         }
 
         $mvs = $this->input->post('motorvehicletypes');
@@ -165,8 +164,9 @@ class Accidents extends CI_Controller {
             $index = $index + 1;
         }
 
-        $this->session->set_flashdata('message_no', 1);
+        $this->session->set_flashdata('messageType', 1);
         $this->session->set_flashdata('message', $message);
+        $this->session->set_flashdata('hasMessage', 1); 
         redirect('accidents/addaccident', 'refresh');
     }    
 
@@ -195,14 +195,14 @@ class Accidents extends CI_Controller {
             'FilterType' => $this->input->post('FilterType')
         );
         
-        $file = fopen('output.txt', 'w');
-        fwrite($file, 'Month : '.$this->input->post('Month').'\n');
-        fwrite($file, 'AccidentType : '.$this->input->post('AccidentType').'\n');
-        fwrite($file, 'Year : '.$this->input->post('Year').'\n');
-        fwrite($file, 'County : '.$this->input->post('County').'\n');
-        fwrite($file, 'NumberPlate : '.$this->input->post('NumberPlate').'\n');
-        fwrite($file, 'FilterType : '.$this->input->post('FilterType').'\n');
-        fclose($file);
+        // $file = fopen('output.txt', 'w');
+        // fwrite($file, 'Month : '.$this->input->post('Month').'\n');
+        // fwrite($file, 'AccidentType : '.$this->input->post('AccidentType').'\n');
+        // fwrite($file, 'Year : '.$this->input->post('Year').'\n');
+        // fwrite($file, 'County : '.$this->input->post('County').'\n');
+        // fwrite($file, 'NumberPlate : '.$this->input->post('NumberPlate').'\n');
+        // fwrite($file, 'FilterType : '.$this->input->post('FilterType').'\n');
+        // fclose($file);
 		$accidents = $this->model_accidents->getAccidentsOverFilter($data);
 		echo json_encode($accidents);
     }    
