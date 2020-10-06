@@ -84,7 +84,7 @@
                 var base_url = "<?php echo base_url(); ?>";
                 var filterType = document.getElementById("filterType");
                 var btngenerateReportData = document.getElementById("generateReportData");
-                btngenerateReportData.disabled = true;
+                // btngenerateReportData.disabled = true;
                 
                 var table = document.getElementById("dataTableReports");
                 var rows = $("#dataTableReports tbody tr").length;

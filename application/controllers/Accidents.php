@@ -164,7 +164,7 @@ class Accidents extends CI_Controller {
             $index = $index + 1;
         }
 
-        $this->session->set_flashdata('messageType', 1);
+        $this->session->set_flashdata('messageType', 0);
         $this->session->set_flashdata('message', $message);
         $this->session->set_flashdata('hasMessage', 1); 
         redirect('accidents/addaccident', 'refresh');
